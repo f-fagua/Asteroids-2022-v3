@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,33 +13,20 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI m_textScore;
 
-   
-
-    void Start()
+    private void Start()
     {
-       // m_textScore.text = "" + Score;
-
+        GameManager.OnUpdateLives += UpdateLives;
+        GameManager.OnUpdateScore += UpdateScore;
         
+        UpdateLives(GameManager.Lives);
+    }
 
-
-        //Slow motion
-        
-        /*  if (GameManager.Lives == 2)
-          {
-              LivesIcons[2].enabled = false;
-          }
-          else if (GameManager.Lives == 1)
-          {
-              LivesIcons[2].enabled = false;
-              LivesIcons[1].enabled = false;
-          }
-          else if (GameManager.Lives == 0)
-          {
-              LivesIcons[2].enabled = false;
-              LivesIcons[1].enabled = false;
-              LivesIcons[0].enabled = false;
-          } */
-
+    private void UpdateLives(int lives)
+    {
+        for (int i = 0; i < LivesIcons.Length; i++)
+        {
+            LivesIcons[i].enabled = i < lives;
+        }
     }
 
     public void HideLive ( int index)
@@ -46,23 +34,9 @@ public class UIManager : MonoBehaviour
         Debug.Log(index);
         LivesIcons[index].enabled = false;
     }
-
-    // Update is called once per frame
-    void Update()
+    
+    public void UpdateScore(float score)
     {
-        int numLives = GameManager.Lives;
-        for (int i = 0; i < LivesIcons.Length; i++)
-        {
-            LivesIcons[i].enabled = i < numLives;
-        }
-
-        UpdateScore();
-
-    }
-
-    public void UpdateScore()
-    {
-        m_textScore.text = "" + GameManager.Score;
-
+        m_textScore.text = "" + score;
     }
 }

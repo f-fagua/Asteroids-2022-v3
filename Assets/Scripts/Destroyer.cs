@@ -33,9 +33,6 @@ public class Destroyer : MonoBehaviour
                     Destroy(ship.gameObject);
                     GameManager.Lives -= 1;
                     Invoke("LoadScene", 2);
-                    UIManager canvasManager = FindObjectOfType<UIManager>();
-                    canvasManager.HideLive(GameManager.Lives);
-
                 }
             }
         }
@@ -47,9 +44,10 @@ public class Destroyer : MonoBehaviour
 
     {
         if (GameManager.Lives > 0)
-            SceneManager.LoadScene("Asteroids 2022 v2 main");
+            GameManager.LoadScene("Asteroids 2022 v2 main");
+            
         else
-            SceneManager.LoadScene("Game Over");
+            GameManager.LoadScene("Game Over");
     }
 
 
