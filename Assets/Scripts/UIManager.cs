@@ -19,6 +19,7 @@ public class UIManager : MonoBehaviour
         GameManager.OnUpdateScore += UpdateScore;
         
         UpdateLives(GameManager.Lives);
+        UpdateScore(GameManager.Score);
     }
 
     private void UpdateLives(int lives)

@@ -36,8 +36,35 @@ public class Destroyer : MonoBehaviour
                 }
             }
         }
-            
 
+        UpdateCollisions();
+    }
+
+    private void UpdateCollisions()
+    {
+        var colliders = FindObjectsOfType<CustomCollider>();
+
+        for (int i = 0; i < colliders.Length; i++)
+        {
+            for (int j = i+1; j < colliders.Length; j++)
+            {
+                var colliderA = colliders[i];
+                var colliderB = colliders[j];
+
+                if (colliderA != colliderB &&
+                    Vector3.Distance(colliderA.transform.position, colliderB.transform.position) <
+                    (colliderA.Radius + colliderB.Radius))
+                {
+                    if (colliderA.Type == ColliderType.Ship && colliderB.Type == ColliderType.Bullet ||
+                        colliderA.Type == ColliderType.Bullet && colliderB.Type == ColliderType.Ship)
+                        continue;
+                    if (colliderA.Type == ColliderType.Asteroid && colliderB.Type == ColliderType.Asteroid)
+                        continue;
+                    
+                    Debug.Log($"Collision between {colliderA.Type} and {colliderB.Type}");
+                }
+            }
+        }
     }
 
     private void LoadScene()
