@@ -44,6 +44,8 @@ public class Destroyer : MonoBehaviour
     {
         var colliders = FindObjectsOfType<CustomCollider>();
 
+        CollisionDebugger.DrawColliders(colliders);
+        /*
         for (int i = 0; i < colliders.Length; i++)
         {
             for (int j = i+1; j < colliders.Length; j++)
@@ -65,6 +67,7 @@ public class Destroyer : MonoBehaviour
                 }
             }
         }
+        */
     }
 
     private void LoadScene()
