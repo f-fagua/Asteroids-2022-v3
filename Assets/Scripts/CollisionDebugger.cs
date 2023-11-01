@@ -29,7 +29,7 @@ public class CollisionDebugger
             var j = i + 1;
             if (j >= k_CircleSmooth)
                 j = 0;
-            Debug.DrawLine(points[i], points[j], Color.green);
+            Debug.DrawLine(points[i], points[j], Color.red);
         }
     }
 }
