@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,10 +16,6 @@ public class SpaceShip : MonoBehaviour
     [SerializeField]
     private KeyCode m_KeyMoveRight;
 
-    [SerializeField]
-    private KeyCode m_KeyShoot;
-
-    
     [SerializeField]
     private float m_rotationSpeed;
 
@@ -39,6 +36,12 @@ public class SpaceShip : MonoBehaviour
        // m_MovementController = this.gameObject.GetComponent<MovementController>();
         m_MovementController = GetComponent<MovementController>();
 
+        InputManager.OnShootKeyPressed += Shoot;
+    }
+
+    private void OnDestroy()
+    {
+        InputManager.OnShootKeyPressed -= Shoot;
     }
 
     public float Radius  // Property
@@ -65,14 +68,12 @@ public class SpaceShip : MonoBehaviour
             Vector3 eulerAngles = new Vector3(0, -1, 0);
             float rotationSpeed = m_rotationSpeed * Time.deltaTime;
             transform.Rotate(eulerAngles * rotationSpeed);
-
-        }
-        if (Input.GetKeyDown(m_KeyShoot))
-        {
-            var chumbimba = Instantiate(bulletPrefab, _currentPos.position, _currentPos.rotation);
-            //chumbimba.GetComponent<Rigidbody2D>().velocity = _currentPos.up * bulletSpeed * Time.deltaTime;
-
         }
         
     }
+
+   public void Shoot()
+   {
+       Instantiate(bulletPrefab, _currentPos.position, _currentPos.rotation);
+   }
 }
