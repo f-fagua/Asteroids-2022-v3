@@ -37,11 +37,27 @@ public class SpaceShip : MonoBehaviour
         m_MovementController = GetComponent<MovementController>();
 
         InputManager.OnShootKeyPressed += Shoot;
+        InputManager.OnForwardKeyPressed += MoveForward;
+        InputManager.OnRotateKeyPressed += Rotate;
     }
 
     private void OnDestroy()
     {
         InputManager.OnShootKeyPressed -= Shoot;
+        InputManager.OnForwardKeyPressed -= MoveForward;
+        InputManager.OnRotateKeyPressed -= Rotate;
+    }
+
+    private void MoveForward()
+    {
+        m_MovementController.speed += m_SpeedIncrement;
+    }
+
+    private void Rotate(int dir)
+    {
+        Vector3 eulerAngles = new Vector3(0, dir, 0);
+        float rotationSpeed = m_rotationSpeed * Time.deltaTime;
+        transform.Rotate(eulerAngles * rotationSpeed);
     }
 
     public float Radius  // Property
@@ -50,29 +66,7 @@ public class SpaceShip : MonoBehaviour
         get => m_Radius;
     }
 
-    // Update is called once per frame
-   private void Update()
-    {
-        if (Input.GetKey(m_KeyMoveForward))
-        {
-            m_MovementController.speed += m_SpeedIncrement;
-        }
-        if (Input.GetKey(m_KeyMoveRight))
-        {
-            Vector3 eulerAngles = new Vector3(0, 1, 0);
-            float rotationSpeed = m_rotationSpeed * Time.deltaTime;
-            transform.Rotate(eulerAngles * rotationSpeed);
-        }
-        if (Input.GetKey(m_KeyMoveLeft))
-        {
-            Vector3 eulerAngles = new Vector3(0, -1, 0);
-            float rotationSpeed = m_rotationSpeed * Time.deltaTime;
-            transform.Rotate(eulerAngles * rotationSpeed);
-        }
-        
-    }
-
-   public void Shoot()
+    public void Shoot()
    {
        Instantiate(bulletPrefab, _currentPos.position, _currentPos.rotation);
    }
