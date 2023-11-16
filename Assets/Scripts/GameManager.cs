@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,9 +11,16 @@ public class GameManager : MonoBehaviour
     private static int m_score = 0;
     private static int s_GainLifeScore = 1000;
 
-    public static OnUpdateLives OnUpdateLives;
+    public static ObjectPool<BulletController> s_BulletPool;
 
+    public static OnUpdateLives OnUpdateLives;
     public static OnUpdateScore OnUpdateScore;
+
+    [SerializeField]
+    public int m_PoolSize;
+
+    [SerializeField] 
+    public GameObject m_BulletPrefab;
     
     public static int Lives
     {
@@ -46,11 +54,23 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public static ObjectPool<BulletController> BulletPool => s_BulletPool;
+
     public static void LoadScene(string sceneName)
     {
         OnUpdateLives = null;
         OnUpdateScore = null;
         SceneManager.LoadScene(sceneName);
+    }
+
+    public void Start()
+    {
+        ResetPool();
+    }
+
+    private void ResetPool()
+    {
+        s_BulletPool = new ObjectPool<BulletController>(m_PoolSize, m_BulletPrefab);
     }
 }
 

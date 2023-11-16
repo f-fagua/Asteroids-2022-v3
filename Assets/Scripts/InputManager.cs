@@ -25,7 +25,7 @@ public class InputManager : MonoBehaviour
     {
         if (Input.GetKeyDown(m_ShootKey))
         {
-             if (OnShootKeyPressed != null)
+            if (OnShootKeyPressed != null)
                 OnShootKeyPressed();
         }
         if (Input.GetKey(m_MoveFordwardKey))
