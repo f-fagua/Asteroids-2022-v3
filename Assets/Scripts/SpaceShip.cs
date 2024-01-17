@@ -68,6 +68,9 @@ public class SpaceShip : MonoBehaviour
 
     public void Shoot()
    {
-       Instantiate(bulletPrefab, _currentPos.position, _currentPos.rotation);
+       // Instantiate(bulletPrefab, _currentPos.position, _currentPos.rotation);
+       var newBullet = GameManager.BulletPool.GetObject();
+       newBullet.transform.position = _currentPos.position;
+       newBullet.transform.rotation = _currentPos.rotation;
    }
 }
